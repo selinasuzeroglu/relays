@@ -1,0 +1,130 @@
+const int controlPin[5] = {22,24,26,28,30}; // define pins
+
+const int triggerType = LOW;// your relay type
+int loopDelay = 1000;// delay in loop
+int tmpStat =1;
+
+
+void setup() {
+  for(int i=0; i<5; i++)
+  {
+    pinMode(controlPin[i], OUTPUT);// set pin as output
+    if(triggerType ==LOW){
+      digitalWrite(controlPin[i], HIGH); // set initial state OFF for low trigger relay
+    }else{
+       digitalWrite(controlPin[i], LOW); // set initial state OFF for high trigger relay     
+    }
+  }
+  
+  Serial.begin(9600);// initialize serial monitor with 9600 baud
+}
+
+void loop() {
+
+
+  
+ Serial.println("===============");
+ channelControl(0,1, 2000); // turn relay 22 ON for 2 seconds
+ channelControl(0,0, 500); // turn relay 22 OFF for 0.5 seconds
+ channelControl(1,1, 2000); // turn relay 24 ON for 2 seconds
+ channelControl(1,0, 500); // turn relay 24 OFF for 0.5 seconds
+ 
+ // pinMode(22, OUTPUT);
+ // pinMode(24, OUTPUT);
+  digitalWrite(22, LOW); // turn relay 22 & 24 ON (=LOW) for 2 seconds
+  digitalWrite(24, LOW); 
+  delay(2000);
+  digitalWrite(22, HIGH); // turn relay 22 & 24 OFF (=HIGH) for 0.5 seconds
+  digitalWrite(24, HIGH);
+  delay(500);
+  //static unsigned long count = 0;
+  //count++;
+  //Serial.println(count);
+
+
+
+
+
+ //Serial.println("===============");
+ channelControl(2,1, 2000); // turn relay 26 ON for 2 seconds
+ channelControl(2,0, 500); // turn relay 26 OFF for 0.5 seconds
+ channelControl(3,1, 2000); // turn relay 28 ON for 2 seconds
+ channelControl(3,0, 500); // turn relay 28 OFF for 0.5 seconds
+ channelControl(4,1, 2000); // turn relay 30 ON for 2 seconds
+ channelControl(4,0, 500); // turn relay 30 OFF for 0.5 seconds
+
+  digitalWrite(28, LOW); // turn relay 28 & 30 ON (=LOW) for 2 seconds
+  digitalWrite(30, LOW); 
+  delay(2000);
+  digitalWrite(28, HIGH); // turn relay 28 & 30 OFF (=HIGH) for 0.5 seconds
+  digitalWrite(30, HIGH);
+  delay(500);
+  //static unsigned long count = 0;
+  //count++;
+ // Serial.println(count);
+
+}
+//for switching LEDs:
+//for(int i=0; i<2; i++)
+ // {
+ //  channelControl(i,1,2000);// turn each relay ON for 200ms
+ // }
+
+
+ 
+
+
+ //delay(loopDelay);// wait for loopDelay ms
+          
+
+
+
+
+
+
+
+
+
+
+
+void channelControl(int relayChannel, int action, int t)
+{
+  int state =LOW;
+  String statTXT =" ON";
+  if(triggerType == LOW)
+  {    
+    if (action ==0)// if OFF requested
+    {
+      state = HIGH;
+      statTXT = " OFF";
+    }
+    digitalWrite(controlPin[relayChannel], state);
+    if(t >0 )
+    {
+      delay(t);
+    }
+       Serial.print ("Channel: ");
+       Serial.print(relayChannel); 
+       Serial.print(statTXT);
+       Serial.print(" - "); 
+       Serial.println(t);        
+  }else{
+    if (action ==1)// if ON requested
+    {
+      state = HIGH;     
+    }else{
+      statTXT = " OFF";    
+    }
+    digitalWrite(controlPin[relayChannel], state);
+    if(t >0 )
+    {
+      delay(t);
+    }
+       Serial.print ("Channel: ");
+       Serial.print(relayChannel); 
+       Serial.print(statTXT);
+       Serial.print(" - "); 
+       Serial.println(t);    
+  }
+
+}
