@@ -3,7 +3,7 @@ const int controlPin[5] = {22,24,26,28,30}; // define pins
 const int triggerType = LOW;// your relay type
 int loopDelay = 1000;// delay in loop
 int tmpStat =1;
-
+Selina
 
 void setup() {
   for(int i=0; i<5; i++)
